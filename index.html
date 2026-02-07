@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sagnik's Cloud Kitchen</title>
+  <style>
+.menu-dropdown {
+  position: absolute;
+  top: 40px;
+  left: 60px;
+  background: maroon;
+  width: 220px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  z-index: 999;
+
+  /* ✅ SCROLL SETTINGS */
+  max-height: 280px;      /* controls dropdown height */
+  overflow-y: auto;       /* enables scroll */
+
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.menu-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.menu-dropdown::-webkit-scrollbar-thumb {
+  background: #ffcccc;
+  border-radius: 10px;
+}
+
+.menu-dropdown.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.menu-dropdown div {
+  color: white;
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.menu-dropdown div:hover {
+  background: #a00000;
+}
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #fff8f0;
+      color: #333;
+    }
+    header {
+      background: #8b0000;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 600;
+    }
+    nav a {
+      color: white;
+      margin-left: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+     .menu-btn {
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+.hero {
+  background: url('hero.jpg') center/cover no-repeat;
+  height: 70vh;
+  max-height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Tablets & phones */
+@media (max-width: 768px) {
+  .hero {
+    height: 40vh;
+    background-position: center top;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .hero {
+    height: 30vh;
+  }
+}
+
+    section {
+      padding: 60px 40px;
+      max-width: 1100px;
+      margin: auto;
+    }
+    section h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      color: #8b0000;
+    }
+    .menu {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+    .menu-item {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .menu-item h3 {
+      margin-top: 0;
+    }
+    .menu-item span {
+      color: #8b0000;
+      font-weight: bold;
+    }
+    .about, .contact {
+      text-align: center;
+      line-height: 1.6;
+    }
+    footer {
+      background: #222;
+      color: #ccc;
+      text-align: center;
+      padding: 20px;
+    }
+.menu-item {
+  text-align: center;
+}
+
+.menu-item img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+.menu {
+  justify-content: center;
+}
+
+.menu-item {
+  max-width: 280px;
+  width: 100%;
+}
+.menu-item img {
+  height: 160px;
+}
+.menu:has(.menu-item:only-child) {
+  justify-content: center;
+}
+
+.stars {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.star {
+  font-size: 24px;
+  color: #ccc;
+  transition: 
+    color 0.3s ease,
+    transform 0.2s ease,
+    text-shadow 0.3s ease;
+}
+
+/* Hover effect */
+.star:hover {
+  transform: scale(1.2);
+}
+
+/* Active (clicked) star */
+.star.active {
+  color: gold;
+  transform: scale(1.25);
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
+}
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.4);
+  }
+  100% {
+    transform: scale(1.25);
+  }
+}
+
+.star.active {
+  animation: pop 0.25s ease;
+}
+
+.star.active {
+  color: gold;
+}
+
+.rating-text {
+  font-size: 14px;
+  margin-top: 5px;
+  color: #555;
+}
+/* Admin Modal CSS */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+}
+
+.modal-content input,
+.modal-content button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+}
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* hamburger */
+.hamburger {
+  display: none;
+  font-size: 26px;
+  cursor: pointer;
+  color: white;
+}
+
+/* mobile dropdown */
+.mobile-nav {
+  display: none;
+  position: absolute;
+  top: 45px;
+  right: 0;
+  background: white;
+  width: 200px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.mobile-nav a {
+  display: block;
+  padding: 12px 16px;
+  color: #333;
+  text-decoration: none;
+  border-bottom: 1px solid #eee;
+}
+
+/* Mobile view */
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
+
+/* Food item animation */
+.menu-item {
+  animation: fadeInFood 0.4s ease;
+}
+
+@keyframes fadeInFood {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+body.no-scroll {
+  overflow: hidden;
+  height: 100vh;
+}
+  </style>
+</head>
+<body>
+
+  <header>
+    <div style="display:flex;align-items:center;gap:15px;">
+      <img 
+  src="logo.png" 
+  alt="Restaurant Logo"
+  style="width:60px;height:60px;border-radius:50%;object-fit:cover;"
+/>
+      <h1>Sagnik's Cloud Kitchen</h1>
+    </div>
+    <nav>
+     <div style="display:flex;align-items:center;gap:12px;position:relative;">
+
+  <!-- Desktop links -->
+  <div class="desktop-nav">
+    <a href="#home">Home</a>
+
+    <!-- MENU BUTTON -->
+    <span class="menu-btn" onclick="toggleMenuList()">Menu ▾</span>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <a
+      href="https://wa.me/918420405045?text=Hello%20I%20want%20to%20place%20an%20order"
+      target="_blank"
+      style="background:#25D366;padding:8px 14px;border-radius:20px;color:white;"
+    >
+      Order Now
+    </a>
+
+    <a href="#" onclick="openAdmin()">Admin Login</a>
+  </div>
+
+  <!-- MENU LIST DROPDOWN -->
+  <div class="menu-dropdown" id="menuList">
+    <div onclick="showFood('echowmein')">Egg Chowmein</div>
+    <div onclick="showFood('cchowmein')">Chicken Chowmein</div>
+    <div onclick="showFood('mchowmein')">Mixed Chowmein</div>
+    <div onclick="showFood('vfriedrice')">Veg Fried Rice</div>
+    <div onclick="showFood('efriedrice')">Egg Fried Rice</div>
+    <div onclick="showFood('cfriedrice')">Chicken Fried Rice</div>
+    <div onclick="showFood('mfriedrice')">Mixed Fried Rice</div>
+    <div onclick="showFood('chilli')">Chilli Chicken</div>
+    <div onclick="showFood('chicken')">Chicken Butter Masala</div>
+    <div onclick="showFood('biryani')">Chicken Biryani</div>
+    <div onclick="showFood('manchurian')">Chicken Manchuruian</div>
+    <div onclick="showFood('momo')">Chicken MOMO</div>
+  </div>
+
+  <!-- Hamburger -->
+  <div class="hamburger" onclick="toggleMobileNav()">☰</div>
+
+  <!-- Mobile menu -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#home" onclick="closeMobileNav()">Home</a>
+    <a href="#menu" onclick="closeMobileNav()">Menu</a>
+    <a href="#about" onclick="closeMobileNav()">About</a>
+    <a href="#contact" onclick="closeMobileNav()">Contact</a>
+    <a href="#" onclick="openAdmin()">Admin Login</a>
+  </div>
+
+    </nav>
+  </header>
+
+  <div class="hero" id="home">
+  </div>
+
+  <section id="menu">
+    <h2>Top Rated Menu</h2>
+    <div class="menu">
+<div class="menu-item" data-id="mchowmein">
+  <img src="mchowmein.jpg" alt="Mixed Chowmein">
+  <h3>Mixed Chowmein</h3>
+  <span>₹ 120 </span>
+  <div class="stars">
+    <span class="star" onclick="rate('mchowmein',1)">★</span>
+    <span class="star" onclick="rate('mchowmein',2)">★</span>
+    <span class="star" onclick="rate('mchowmein',3)">★</span>
+    <span class="star" onclick="rate('mchowmein',4)">★</span>
+    <span class="star" onclick="rate('mchowmein',5)">★</span>
+  </div>
+  <div class="rating-text" id="mchowmein-rating"></div>
+</div>
+<div class="menu-item" data-id="cchowmein">
+  <img src="cchowmein.jpg" alt="Chicken Chowmein">
+  <h3>Chicken Chowmein</h3>
+  <span>₹ 120 </span>
+  <div class="stars">
+    <span class="star" onclick="rate('cchowmein',1)">★</span>
+    <span class="star" onclick="rate('cchowmein',2)">★</span>
+    <span class="star" onclick="rate('cchowmein',3)">★</span>
+    <span class="star" onclick="rate('cchowmein',4)">★</span>
+    <span class="star" onclick="rate('cchowmein',5)">★</span>
+  </div>
+  <div class="rating-text" id="cchowmein-rating"></div>
+</div>
+<div class="menu-item" data-id="echowmein">
+  <img src="echowmein.jpg" alt="Egg Chowmein">
+  <h3>Egg Chowmein</h3>
+  <span>₹ 120 </span>
+  <div class="stars">
+    <span class="star" onclick="rate('echowmein',1)">★</span>
+    <span class="star" onclick="rate('echowmein',2)">★</span>
+    <span class="star" onclick="rate('echowmein',3)">★</span>
+    <span class="star" onclick="rate('echowmein',4)">★</span>
+    <span class="star" onclick="rate('echowmein',5)">★</span>
+  </div>
+  <div class="rating-text" id="echowmein-rating"></div>
+</div>
+      <div class="menu-item" data-id="chicken">
+  <img src="chicken.jpg" alt="Chicken Butter Masala">
+  <h3>Chicken Butter Masala</h3>
+  <span>₹ 120 </span>
+  <div class="stars">
+    <span class="star" onclick="rate('chicken',1)">★</span>
+    <span class="star" onclick="rate('chicken',2)">★</span>
+    <span class="star" onclick="rate('chicken',3)">★</span>
+    <span class="star" onclick="rate('chicken',4)">★</span>
+    <span class="star" onclick="rate('chicken',5)">★</span>
+  </div>
+  <div class="rating-text" id="chicken-rating"></div>
+</div>
+<div class="menu-item" data-id="chilli">
+  <img src="chilli.jpg" alt="Chilli Chicken">
+  <h3>Chilli Chicken</h3>
+  <span>₹ 120 </span>
+  <div class="stars">
+    <span class="star" onclick="rate('chilli',1)">★</span>
+    <span class="star" onclick="rate('chilli',2)">★</span>
+    <span class="star" onclick="rate('chilli',3)">★</span>
+    <span class="star" onclick="rate('chilli',4)">★</span>
+    <span class="star" onclick="rate('chilli',5)">★</span>
+  </div>
+  <div class="rating-text" id="chilli-rating"></div>
+</div>
+<div class="menu-item" data-id="manchurian">
+  <img src="manchurian.jpg" alt="Chicken Manchurian">
+  <h3>Chicken Manchurian</h3>
+  <span>₹ 120 </span>
+  <div class="stars">
+    <span class="star" onclick="rate('manchurian',1)">★</span>
+    <span class="star" onclick="rate('manchurian',2)">★</span>
+    <span class="star" onclick="rate('manchurian',3)">★</span>
+    <span class="star" onclick="rate('manchurian',4)">★</span>
+    <span class="star" onclick="rate('manchurian',5)">★</span>
+  </div>
+  <div class="rating-text" id="manchurian-rating"></div>
+</div>
+      <div class="menu-item" data-id="biryani">
+        <img src="biryani.jpg" alt="Chicken Biryani">
+        <h3>Chicken Biryani</h3>
+        <span>₹ 160 </span>
+<div class="stars">
+    <span class="star" onclick="rate('biryani',1)">★</span>
+    <span class="star" onclick="rate('biryani',2)">★</span>
+    <span class="star" onclick="rate('biryani',3)">★</span>
+    <span class="star" onclick="rate('biryani',4)">★</span>
+    <span class="star" onclick="rate('biryani',5)">★</span>
+  </div>
+  <div class="rating-text" id="biryani-rating"></div>
+      </div>
+      <div class="menu-item" data-id="mfriedrice">
+        <img src="mfriedrice.jpg" alt="Mixed Fried Rice">
+        <h3>Mixed Fried Rice</h3>
+        <span>₹ 180 </span>
+<div class="stars">
+    <span class="star" onclick="rate('mfriedrice',1)">★</span>
+    <span class="star" onclick="rate('mfriedrice',2)">★</span>
+    <span class="star" onclick="rate('mfriedrice',3)">★</span>
+    <span class="star" onclick="rate('mfriedrice',4)">★</span>
+    <span class="star" onclick="rate('mfriedrice',5)">★</span>
+  </div>
+  <div class="rating-text" id="mfriedrice-rating"></div>
+     </div>
+      <div class="menu-item" data-id="vfriedrice">
+        <img src="vfriedrice.jpg" alt="Vage Fried Rice">
+        <h3>Vage Fried Rice</h3>
+        <span>₹ 180 </span>
+<div class="stars">
+    <span class="star" onclick="rate('vfriedrice',1)">★</span>
+    <span class="star" onclick="rate('vfriedrice',2)">★</span>
+    <span class="star" onclick="rate('vfriedrice',3)">★</span>
+    <span class="star" onclick="rate('vfriedrice',4)">★</span>
+    <span class="star" onclick="rate('vfriedrice',5)">★</span>
+  </div>
+  <div class="rating-text" id="vfriedrice-rating"></div>
+</div>
+      <div class="menu-item" data-id="efriedrice">
+        <img src="efriedrice.jpg" alt="Egg Fried Rice">
+        <h3>Egg Fried Rice</h3>
+        <span>₹ 180 </span>
+<div class="stars">
+    <span class="star" onclick="rate('efriedrice',1)">★</span>
+    <span class="star" onclick="rate('efriedrice',2)">★</span>
+    <span class="star" onclick="rate('efriedrice',3)">★</span>
+    <span class="star" onclick="rate('efriedrice',4)">★</span>
+    <span class="star" onclick="rate('efriedrice',5)">★</span>
+  </div>
+  <div class="rating-text" id="efriedrice-rating"></div>
+ </div>
+      <div class="menu-item" data-id="cfriedrice">
+        <img src="cfriedrice.jpg" alt="chicken Fried Rice">
+        <h3>chicken Fried Rice</h3>
+        <span>₹ 180 </span>
+<div class="stars">
+    <span class="star" onclick="rate('cfriedrice',1)">★</span>
+    <span class="star" onclick="rate('cfriedrice',2)">★</span>
+    <span class="star" onclick="rate('cfriedrice',3)">★</span>
+    <span class="star" onclick="rate('cfriedrice',4)">★</span>
+    <span class="star" onclick="rate('cfriedrice',5)">★</span>
+  </div>
+  <div class="rating-text" id="cfriedrice-rating"></div>
+      </div>
+      <div class="menu-item" data-id="momo">
+        <img src="momo.jpg" alt="Chicken MOMO">
+        <h3>Chicken MOMO</h3>
+        <span>₹ 80 </span>
+<div class="stars">
+    <span class="star" onclick="rate('momo',1)">★</span>
+    <span class="star" onclick="rate('momo',2)">★</span>
+    <span class="star" onclick="rate('momo',3)">★</span>
+    <span class="star" onclick="rate('momo',4)">★</span>
+    <span class="star" onclick="rate('momo',5)">★</span>
+  </div>
+  <div class="rating-text" id="momo-rating"></div>
+     </div>
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <h2>About Us</h2>
+    <p>
+      Welcome to Sagnik Cloud Kitchin! We serve fresh, tasty, and hygienic food made from the best ingredients.
+      Our mission is to give you a memorable dining experience every time you visit.
+    </p>
+  </section>
+
+  <section id="contact" class="contact">
+    <h2>Contact Us</h2>
+    <p>📍 Address: Baruipur, Kolkata</p>
+    <p>📞 Phone: +91 8420405045</p>
+    <p>⏰ Open: 10:00 AM – 10:00 PM</p>
+
+  <div style="margin-top:30px;">
+<a
+href="https://www.google.com/maps?q=Baruipur,%20Kolkata"
+target="_blank"
+style="display:block;"
+>
+<iframe
+src="https://www.google.com/maps?q=Baruipur%2C%20Kolkata&output=embed"
+width="50%"
+height="250"
+style="border:0;border-radius:10px;pointer-events:none;"
+loading="lazy">
+</iframe>
+</a>
+<p style="margin-top:10px;font-weight:bold;color:#8b0000;">
+👉 Tap the map to open Google Maps
+</p>
+</div>
+</section>
+
+  <footer>
+    <p>© 2026 Sagnik's Cloud Kitchen. All rights reserved.</p>
+  </footer>
+
+<!-- Admin Login Modal -->
+<div class="modal" id="adminModal">
+<div class="modal-content">
+<h3>Admin Login</h3>
+<input type="text" id="adminUser" placeholder="Username" />
+<input type="password" id="adminPass" placeholder="Password" />
+<button onclick="loginAdmin()">Login</button>
+<p id="loginMsg" style="color:red;"></p>
+</div>
+</div>
+
+<script>
+function rate(itemId, stars) {
+  let ratings = JSON.parse(localStorage.getItem('ratings')) || {};
+  let userRatings = JSON.parse(localStorage.getItem('userRatings')) || {};
+if (userRatings[itemId]) {
+  alert("You already rated this item");
+  return;
+}
+ userRatings[itemId] = stars;
+  localStorage.setItem('userRatings', JSON.stringify(userRatings));
+  if (!ratings[itemId]) {
+    ratings[itemId] = { total: 0, count: 0 };
+  }
+  ratings[itemId].total += stars;
+  ratings[itemId].count += 1;
+  localStorage.setItem('ratings', JSON.stringify(ratings));
+
+  highlightStars(itemId, stars);
+  renderRating(itemId);
+}
+
+function highlightStars(itemId, stars) {
+  const starsEls = document.querySelectorAll(
+    `[data-id="${itemId}"] .star`
+  );
+
+  starsEls.forEach((star, index) => {
+    star.classList.toggle('active', index < stars);
+  });
+}
+
+function renderRating(itemId) {
+  const ratings = JSON.parse(localStorage.getItem('ratings')) || {};
+  const data = ratings[itemId];
+  if (!data) return;
+
+  const avg = (data.total / data.count).toFixed(1);
+  document.getElementById(itemId + '-rating').innerText =
+    `⭐ ${avg} (${data.count} reviews)`;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const ratings = JSON.parse(localStorage.getItem('ratings')) || {};
+  const userRatings = JSON.parse(localStorage.getItem('userRatings')) || {};
+
+  Object.keys(ratings).forEach(renderRating);
+  Object.keys(userRatings).forEach(id =>
+    highlightStars(id, userRatings[id])
+  );
+});
+</script>
+<script>
+function toggleMobileNav() {
+  const nav = document.getElementById('mobileNav');
+  nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+}
+</script>
+<script>
+function toggleMenuList() {
+  const menu = document.getElementById('menuList');
+  const isOpen = menu.classList.toggle('show');
+
+  if (isOpen) {
+    document.body.classList.add('no-scroll');
+  } else {
+    document.body.classList.remove('no-scroll');
+  }
+}
+
+function closeMobileNav() {
+  document.getElementById('mobileNav').style.display = 'none';
+}
+</script>
+
+<script>
+function openAdmin(){
+document.getElementById('adminModal').style.display='flex';
+}
+function loginAdmin(){
+const user = document.getElementById('adminUser').value;
+const pass = document.getElementById('adminPass').value;
+
+// SIMPLE DEMO LOGIN (can be upgraded to database later)
+if(user === 'admin' && pass === '1234'){
+localStorage.setItem('adminLoggedIn','yes');
+window.location.href = 'admin.html';
+} else {
+document.getElementById('loginMsg').innerText = 'Invalid login';
+}
+}
+</script>
+<script>
+function showFood(id) {
+  document.querySelectorAll('.menu-item').forEach(item => {
+    item.style.display = 'none';
+  });
+
+  const food = document.querySelector(`[data-id="${id}"]`);
+  if (food) {
+  food.style.display = 'block';
+  food.style.animation = 'none';
+  food.offsetHeight; // re-trigger animation
+  food.style.animation = null;
+}
+  document.getElementById('menuList').classList.remove('show');
+  document.body.classList.remove('no-scroll');
+  document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+
+<script>
+document.addEventListener('click', function (e) {
+  const menu = document.getElementById('menuList');
+  const menuBtn = document.querySelector('.menu-btn');
+
+  const mobileNav = document.getElementById('mobileNav');
+  const hamburger = document.querySelector('.hamburger');
+
+  // Close desktop menu
+  if (menu && menuBtn && !menu.contains(e.target) && !menuBtn.contains(e.target)) {
+    menu.classList.remove('show');
+    document.body.classList.remove('no-scroll');
+  }
+
+  // Close mobile menu
+  if (
+    mobileNav &&
+    hamburger &&
+    mobileNav.style.display === 'block' &&
+    !mobileNav.contains(e.target) &&
+    !hamburger.contains(e.target)
+  ) {
+    mobileNav.style.display = 'none';
+  }
+});
+</script>
+
+
+</body>
+</html>
