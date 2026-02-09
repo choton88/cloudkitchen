@@ -104,8 +104,6 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.hero {
   max-width: 100%;
   overflow: hidden;
 }
@@ -199,9 +197,6 @@ html, body {
 }
 .menu-item img {
   height: 160px;
-}
-.menu:has(.menu-item:only-child) {
-  justify-content: center;
 }
 
 .stars {
@@ -707,7 +702,10 @@ document.addEventListener('DOMContentLoaded', () => {
 <script>
 function toggleMobileNav() {
   const nav = document.getElementById('mobileNav');
-  nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+  const open = nav.style.display === 'block';
+
+  nav.style.display = open ? 'none' : 'block';
+  document.body.classList.toggle('no-scroll', !open);
 }
 </script>
 <script>
@@ -715,11 +713,7 @@ function toggleMenuList() {
   const menu = document.getElementById('menuList');
   const isOpen = menu.classList.toggle('show');
 
-  if (isOpen) {
-    document.body.classList.add('no-scroll');
-  } else {
-    document.body.classList.remove('no-scroll');
-  }
+  document.body.classList.toggle('no-scroll', isOpen);
 }
 function closeMobileNav() {
   const menu = document.getElementById('menuList');
