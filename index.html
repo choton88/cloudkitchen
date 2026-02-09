@@ -348,6 +348,31 @@ body.no-scroll {
   overflow: hidden;
   height: 100vh;
 }
+/* ===== MOBILE FIX ONLY ===== */
+@media (max-width: 768px) {
+
+  .menu-dropdown {
+    position: fixed;
+    top: 60px;                 /* below header */
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+
+    width: 90vw;               /* fit screen */
+    max-width: 280px;
+    max-height: 65vh;
+
+    overflow-y: auto;
+    z-index: 9999;
+  }
+
+  .menu-dropdown.show {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  body.no-scroll {
+    overflow: hidden;
+  }
+}
   </style>
 </head>
 <body>
@@ -696,8 +721,18 @@ function toggleMenuList() {
     document.body.classList.remove('no-scroll');
   }
 }
-
 function closeMobileNav() {
+  const menu = document.getElementById('menuList');
+
+  // Close dropdown menu
+  if (menu) {
+    menu.classList.remove('show');
+  }
+
+  // Enable body scroll again
+  document.body.classList.remove('no-scroll');
+
+  // Hide mobile nav
   document.getElementById('mobileNav').style.display = 'none';
 }
 </script>
