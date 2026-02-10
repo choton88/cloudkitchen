@@ -107,7 +107,11 @@ html, body {
   max-width: 100%;
   overflow: hidden;
 }
-
+@media (max-width: 768px) {
+  .menu-btn {
+    display: none;
+  }
+}
 /* Tablets & phones */
 @media (max-width: 768px) {
   .hero {
@@ -158,6 +162,12 @@ html, body {
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+      text-align: center;
+      max-width: 100%;
+      width: 100%;
+
+      animation: fadeInFood 0.4s ease;
     }
     .menu-item h3 {
       margin-top: 0;
@@ -176,27 +186,13 @@ html, body {
       text-align: center;
       padding: 20px;
     }
-.menu-item {
-  text-align: center;
-}
 
 .menu-item img {
   width: 100%;
-  height: 180px;
+  height: 160px;
   object-fit: cover;
   border-radius: 10px;
   margin-bottom: 12px;
-}
-.menu {
-  justify-content: center;
-}
-
-.menu-item {
-  max-width: 100%;
-  width: 100%;
-}
-.menu-item img {
-  height: 160px;
 }
 
 .stars {
@@ -324,11 +320,6 @@ html, body {
   }
 }
 
-/* Food item animation */
-.menu-item {
-  animation: fadeInFood 0.4s ease;
-}
-
 @keyframes fadeInFood {
   from {
     opacity: 0;
@@ -341,7 +332,6 @@ html, body {
 }
 body.no-scroll {
   overflow: hidden;
-  height: 100vh;
 }
 /* ===== MOBILE FIX ONLY ===== */
 @media (max-width: 768px) {
@@ -366,6 +356,26 @@ body.no-scroll {
 
   body.no-scroll {
     overflow: hidden;
+  }
+}
+/* ===== MOBILE MENU DROPDOWN RIGHT SIDE ===== */
+@media (max-width: 768px) {
+  .menu-dropdown {
+    position: fixed;
+    top: 70px;           /* below header */
+    right: 10px;         /* stick to right */
+    left: auto;
+
+    width: 90vw;
+    max-width: 280px;
+    max-height: 65vh;
+
+    transform: translateX(20px) translateY(-10px);
+    z-index: 9999;
+  }
+
+  .menu-dropdown.show {
+    transform: translateX(0) translateY(0);
   }
 }
   </style>
@@ -571,7 +581,7 @@ body.no-scroll {
   <div class="rating-text" id="efriedrice-rating"></div>
  </div>
       <div class="menu-item" data-id="cfriedrice">
-        <img src="cfriedrice.jpg" alt="chicken Fried Rice">
+        <img src="cfriedrice.jpg" alt="Chicken Fried Rice">
         <h3>chicken Fried Rice</h3>
         <span>₹ 180 </span>
 <div class="stars">
@@ -602,7 +612,7 @@ body.no-scroll {
   <section id="about" class="about">
     <h2>About Us</h2>
     <p>
-      Welcome to Sagnik Cloud Kitchin! We serve fresh, tasty, and hygienic food made from the best ingredients.
+      Welcome to Sagnik Cloud Kitchen! We serve fresh, tasty, and hygienic food made from the best ingredients.
       Our mission is to give you a memorable dining experience every time you visit.
     </p>
   </section>
