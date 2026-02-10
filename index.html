@@ -5,6 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sagnik's Cloud Kitchen</title>
   <style>
+/* ============================= */
+/* FINAL MENU VISIBILITY RULES   */
+/* ============================= */
+
+/* Desktop: Menu ▾ shows ONLY food */
+@media (min-width: 769px) {
+  .menu-dropdown .nav-links,
+  .menu-dropdown .menu-separator {
+    display: none;
+  }
+}
+
+/* Mobile: ☰ shows ONLY nav links */
+@media (max-width: 768px) {
+  .menu-dropdown .food-links {
+    display: none;
+  }
+}
+
 iframe {
   max-width: 100%;
   display: block;
@@ -339,12 +358,7 @@ body.no-scroll {
 }
 .menu-dropdown {
   padding-top: 8px;
-}
-.menu-dropdown {
   box-sizing: border-box;
-}
-/* Allow sticky nav inside dropdown */
-.menu-dropdown {
   overflow-y: auto;
 }
 .nav-links {
@@ -359,12 +373,13 @@ body.no-scroll {
     display: none;
   }
 }
-/* Mobile: hide food items inside hamburger menu */
-@media (max-width: 768px) {
-  .menu-dropdown .food-links {
-    display: none;
+/* FORCE HIDE SEPARATOR ON DESKTOP */
+@media (min-width: 769px) {
+  .menu-separator {
+    display: none !important;
   }
 }
+
   </style>
 </head>
 <body>
@@ -399,6 +414,8 @@ body.no-scroll {
 
     <a href="#" onclick="openAdmin()">Admin Login</a>
   </div>
+ <!-- Hamburger (MOBILE ONLY) -->
+    <div class="hamburger" onclick="toggleMenuList()">☰</div>
   <!-- MENU LIST DROPDOWN -->
   <div class="menu-dropdown" id="menuList">
 <!-- MOBILE NAV LINKS -->
@@ -426,8 +443,7 @@ body.no-scroll {
     <div onclick="showFood('manchurian')">Chicken Manchurian</div>
     <div onclick="showFood('momo')">Chicken MOMO</div>
   </div>
-  <!-- Hamburger -->
-  <div class="hamburger" onclick="toggleMenuList()">☰</div>
+</div>
     </nav>
   </header>
 
