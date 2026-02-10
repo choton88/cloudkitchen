@@ -647,20 +647,6 @@ function toggleMenuList() {
 
   document.body.classList.toggle('no-scroll', isOpen);
 }
-function closeMobileNav() {
-  const menu = document.getElementById('menuList');
-
-  // Close dropdown menu
-  if (menu) {
-    menu.classList.remove('show');
-  }
-
-  // Enable body scroll again
-  document.body.classList.remove('no-scroll');
-
-  // Hide mobile nav
-  document.getElementById('mobileNav').style.display = 'none';
-}
 </script>
 
 <script>
@@ -703,12 +689,14 @@ function showFood(id) {
 document.addEventListener('click', function (e) {
   const menu = document.getElementById('menuList');
   const menuBtn = document.querySelector('.menu-btn');
-
-  const mobileNav = document.getElementById('mobileNav');
   const hamburger = document.querySelector('.hamburger');
 
-  // Close desktop menu
-  if (menu && menuBtn && !menu.contains(e.target) && !menuBtn.contains(e.target)) {
+  if (
+    menu &&
+    !menu.contains(e.target) &&
+    !menuBtn?.contains(e.target) &&
+    !hamburger.contains(e.target)
+  ) {
     menu.classList.remove('show');
     document.body.classList.remove('no-scroll');
   }
