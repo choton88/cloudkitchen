@@ -303,7 +303,7 @@ body.no-scroll {
 @media (max-width: 768px) {
   .menu-dropdown {
     position: fixed;
-    top: 70px;           /* below header */
+    top: 110px;           /* below header */
     right: 10px;         /* stick to right */
     left: auto;
 
@@ -337,7 +337,16 @@ body.no-scroll {
   border-top: 1px solid #eee;
   margin: 6px 0;
 }
-
+.menu-dropdown {
+  padding-top: 8px;
+}
+.menu-dropdown {
+  box-sizing: border-box;
+}
+/* Allow sticky nav inside dropdown */
+.menu-dropdown {
+  overflow-y: auto;
+}
   </style>
 </head>
 <body>
@@ -372,15 +381,6 @@ body.no-scroll {
 
     <a href="#" onclick="openAdmin()">Admin Login</a>
   </div>
-<!-- MOBILE / NAV LINKS -->
-<div class="nav-links">
-  <a href="#home" onclick="closeMenu()">Home</a>
-  <a href="#about" onclick="closeMenu()">About</a>
-  <a href="#contact" onclick="closeMenu()">Contact</a>
-  <a href="#" onclick="openAdmin(); closeMenu()">Admin Login</a>
-</div>
-
-<hr class="menu-separator">
   <!-- MENU LIST DROPDOWN -->
   <div class="menu-dropdown" id="menuList">
     <div onclick="showFood('echowmein')">Egg Chowmein</div>
@@ -396,7 +396,15 @@ body.no-scroll {
     <div onclick="showFood('manchurian')">Chicken Manchurian</div>
     <div onclick="showFood('momo')">Chicken MOMO</div>
   </div>
+<!-- MOBILE NAV LINKS -->
+<div class="nav-links">
+  <a href="#home" onclick="toggleMenuList()">Home</a>
+  <a href="#about" onclick="toggleMenuList()">About</a>
+  <a href="#contact" onclick="toggleMenuList()">Contact</a>
+  <a href="#" onclick="openAdmin(); toggleMenuList()">Admin Login</a>
+</div>
 
+<hr class="menu-separator">
   <!-- Hamburger -->
   <div class="hamburger" onclick="toggleMenuList()">☰</div>
     </nav>
