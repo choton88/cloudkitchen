@@ -324,12 +324,12 @@ body.no-scroll {
   display: block;
   padding: 12px 16px;
   font-weight: 600;
-  color: #8b0000;
+  color: white;
   text-decoration: none;
 }
 
 .nav-links a:hover {
-  background: #f5f5f5;
+  background: rgba(255,255,255,0.15);
 }
 
 .menu-separator {
@@ -346,6 +346,18 @@ body.no-scroll {
 /* Allow sticky nav inside dropdown */
 .menu-dropdown {
   overflow-y: auto;
+}
+.nav-links {
+  position: sticky;
+  top: 0;
+  background: maroon;
+  z-index: 5;
+}
+/* Hide mobile nav links on desktop */
+@media (min-width: 769px) {
+  .menu-dropdown .nav-links {
+    display: none;
+  }
 }
   </style>
 </head>
@@ -383,6 +395,17 @@ body.no-scroll {
   </div>
   <!-- MENU LIST DROPDOWN -->
   <div class="menu-dropdown" id="menuList">
+<!-- MOBILE NAV LINKS -->
+<div class="nav-links">
+  <a href="#home" onclick="toggleMenuList()">Home</a>
+  <a href="#about" onclick="toggleMenuList()">About</a>
+  <a href="#contact" onclick="toggleMenuList()">Contact</a>
+  <a href="#" onclick="openAdmin(); toggleMenuList()">Admin Login</a>
+</div>
+
+<hr class="menu-separator">
+
+     <!-- FOOD MENU -->
     <div onclick="showFood('echowmein')">Egg Chowmein</div>
     <div onclick="showFood('cchowmein')">Chicken Chowmein</div>
     <div onclick="showFood('mchowmein')">Mixed Chowmein</div>
@@ -396,15 +419,6 @@ body.no-scroll {
     <div onclick="showFood('manchurian')">Chicken Manchurian</div>
     <div onclick="showFood('momo')">Chicken MOMO</div>
   </div>
-<!-- MOBILE NAV LINKS -->
-<div class="nav-links">
-  <a href="#home" onclick="toggleMenuList()">Home</a>
-  <a href="#about" onclick="toggleMenuList()">About</a>
-  <a href="#contact" onclick="toggleMenuList()">Contact</a>
-  <a href="#" onclick="openAdmin(); toggleMenuList()">Admin Login</a>
-</div>
-
-<hr class="menu-separator">
   <!-- Hamburger -->
   <div class="hamburger" onclick="toggleMenuList()">☰</div>
     </nav>
