@@ -319,6 +319,25 @@ body.no-scroll {
     transform: translateX(0) translateY(0);
   }
 }
+/* ===== MOBILE NAV LINKS INSIDE DROPDOWN ===== */
+.nav-links a {
+  display: block;
+  padding: 12px 16px;
+  font-weight: 600;
+  color: #8b0000;
+  text-decoration: none;
+}
+
+.nav-links a:hover {
+  background: #f5f5f5;
+}
+
+.menu-separator {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 6px 0;
+}
+
   </style>
 </head>
 <body>
@@ -353,7 +372,15 @@ body.no-scroll {
 
     <a href="#" onclick="openAdmin()">Admin Login</a>
   </div>
+<!-- MOBILE / NAV LINKS -->
+<div class="nav-links">
+  <a href="#home" onclick="closeMenu()">Home</a>
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+  <a href="#" onclick="openAdmin(); closeMenu()">Admin Login</a>
+</div>
 
+<hr class="menu-separator">
   <!-- MENU LIST DROPDOWN -->
   <div class="menu-dropdown" id="menuList">
     <div onclick="showFood('echowmein')">Egg Chowmein</div>
