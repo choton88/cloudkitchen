@@ -275,29 +275,6 @@ html, body {
   cursor: pointer;
   color: white;
 }
-
-/* mobile dropdown */
-.mobile-nav {
-  display: none;
-  position: absolute;
-  top: 45px;
-  right: 10px;
-  background: white;
-  width: 200px;
-  border-radius: 10px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-  overflow: hidden;
-  z-index: 1000;
-}
-
-.mobile-nav a {
-  display: block;
-  padding: 12px 16px;
-  color: #333;
-  text-decoration: none;
-  border-bottom: 1px solid #eee;
-}
-
 /* Mobile view */
 @media (max-width: 768px) {
   .desktop-nav {
@@ -394,17 +371,7 @@ body.no-scroll {
   </div>
 
   <!-- Hamburger -->
-  <div class="hamburger" onclick="toggleMobileNav()">☰</div>
-
-  <!-- Mobile menu -->
-  <div class="mobile-nav" id="mobileNav">
-    <a href="#home" onclick="closeMobileNav()">Home</a>
-    <a href="#menu" onclick="closeMobileNav()">Menu</a>
-    <a href="#about" onclick="closeMobileNav()">About</a>
-    <a href="#contact" onclick="closeMobileNav()">Contact</a>
-    <a href="#" onclick="openAdmin()">Admin Login</a>
-  </div>
-
+  <div class="hamburger" onclick="toggleMenuList()">☰</div>
     </nav>
   </header>
 
@@ -674,15 +641,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 <script>
-function toggleMobileNav() {
-  const nav = document.getElementById('mobileNav');
-  const open = nav.style.display === 'block';
-
-  nav.style.display = open ? 'none' : 'block';
-  document.body.classList.toggle('no-scroll', !open);
-}
-</script>
-<script>
 function toggleMenuList() {
   const menu = document.getElementById('menuList');
   const isOpen = menu.classList.toggle('show');
@@ -753,17 +711,6 @@ document.addEventListener('click', function (e) {
   if (menu && menuBtn && !menu.contains(e.target) && !menuBtn.contains(e.target)) {
     menu.classList.remove('show');
     document.body.classList.remove('no-scroll');
-  }
-
-  // Close mobile menu
-  if (
-    mobileNav &&
-    hamburger &&
-    mobileNav.style.display === 'block' &&
-    !mobileNav.contains(e.target) &&
-    !hamburger.contains(e.target)
-  ) {
-    mobileNav.style.display = 'none';
   }
 });
 </script>
