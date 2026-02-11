@@ -5,6 +5,63 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sagnik's Cloud Kitchen</title>
   <style>
+.cart-icon {
+  cursor: pointer;
+  font-size: 20px;
+  position: relative;
+}
+
+#cart-count {
+  background: gold;
+  color: black;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+
+.cart-panel {
+  position: fixed;
+  top: 0;
+  right: -350px;
+  width: 320px;
+  height: 100%;
+  background: white;
+  box-shadow: -4px 0 10px rgba(0,0,0,0.2);
+  padding: 20px;
+  overflow-y: auto;
+  transition: right 0.3s ease;
+  z-index: 9999;
+}
+
+.cart-panel.show {
+  right: 0;
+}
+
+.cart-panel h3 {
+  margin-top: 0;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.cart-total {
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+.cart-panel button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background: #25D366;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
 /* ============================= */
 /* FINAL MENU VISIBILITY RULES   */
 /* ============================= */
@@ -40,7 +97,7 @@ html, body {
 .menu-dropdown {
   position: absolute;
   top: 40px;
-  left: 60px;
+  left: 60;
   background: maroon;
   width: 220px;
   border-radius: 10px;
@@ -461,6 +518,7 @@ body.no-scroll {
   <img src="mchowmein.jpg" alt="Mixed Chowmein">
   <h3>Mixed Chowmein</h3>
   <span>₹ 120 </span>
+  <button onclick="addToCart('Mixed Chowmein',120)">Add to Cart</button>
   <div class="stars">
     <span class="star" onclick="rate('mchowmein',1)">★</span>
     <span class="star" onclick="rate('mchowmein',2)">★</span>
@@ -474,6 +532,7 @@ body.no-scroll {
   <img src="cchowmein.jpg" alt="Chicken Chowmein">
   <h3>Chicken Chowmein</h3>
   <span>₹ 120 </span>
+  <button onclick="addToCart('Chicken Chowmein',120)">Add to Cart</button>
   <div class="stars">
     <span class="star" onclick="rate('cchowmein',1)">★</span>
     <span class="star" onclick="rate('cchowmein',2)">★</span>
@@ -487,6 +546,7 @@ body.no-scroll {
   <img src="echowmein.jpg" alt="Egg Chowmein">
   <h3>Egg Chowmein</h3>
   <span>₹ 120 </span>
+  <button onclick="addToCart('Egg Chowmein',120)">Add to Cart</button>
   <div class="stars">
     <span class="star" onclick="rate('echowmein',1)">★</span>
     <span class="star" onclick="rate('echowmein',2)">★</span>
@@ -500,6 +560,7 @@ body.no-scroll {
   <img src="chicken.jpg" alt="Chicken Butter Masala">
   <h3>Chicken Butter Masala</h3>
   <span>₹ 120 </span>
+  <button onclick="addToCart('Chicken Butter Masala',120)">Add to Cart</button>
   <div class="stars">
     <span class="star" onclick="rate('chicken',1)">★</span>
     <span class="star" onclick="rate('chicken',2)">★</span>
@@ -513,6 +574,7 @@ body.no-scroll {
   <img src="chilli.jpg" alt="Chilli Chicken">
   <h3>Chilli Chicken</h3>
   <span>₹ 120 </span>
+  <button onclick="addToCart('Chilli Chicken',120)">Add to Cart</button>
   <div class="stars">
     <span class="star" onclick="rate('chilli',1)">★</span>
     <span class="star" onclick="rate('chilli',2)">★</span>
@@ -526,6 +588,7 @@ body.no-scroll {
   <img src="manchurian.jpg" alt="Chicken Manchurian">
   <h3>Chicken Manchurian</h3>
   <span>₹ 120 </span>
+  <button onclick="addToCart('Chicken Manchurian',120)">Add to Cart</button>
   <div class="stars">
     <span class="star" onclick="rate('manchurian',1)">★</span>
     <span class="star" onclick="rate('manchurian',2)">★</span>
@@ -539,6 +602,7 @@ body.no-scroll {
         <img src="biryani.jpg" alt="Chicken Biryani">
         <h3>Chicken Biryani</h3>
         <span>₹ 160 </span>
+        <button onclick="addToCart('Chicken Biryani',160)">Add to Cart</button>
 <div class="stars">
     <span class="star" onclick="rate('biryani',1)">★</span>
     <span class="star" onclick="rate('biryani',2)">★</span>
@@ -552,7 +616,8 @@ body.no-scroll {
         <img src="mfriedrice.jpg" alt="Mixed Fried Rice">
         <h3>Mixed Fried Rice</h3>
         <span>₹ 180 </span>
-<div class="stars">
+        <button onclick="addToCart('Mixed Fried Rice',180)">Add to Cart</button>
+    <div class="stars">
     <span class="star" onclick="rate('mfriedrice',1)">★</span>
     <span class="star" onclick="rate('mfriedrice',2)">★</span>
     <span class="star" onclick="rate('mfriedrice',3)">★</span>
@@ -564,8 +629,9 @@ body.no-scroll {
       <div class="menu-item" data-id="vfriedrice">
         <img src="vfriedrice.jpg" alt="Veg Fried Rice">
         <h3>Veg Fried Rice</h3>
-        <span>₹ 180 </span>
-<div class="stars">
+        <span>₹ 80 </span>
+        <button onclick="addToCart('Veg Fried Rice',80)">Add to Cart</button>
+  <div class="stars">
     <span class="star" onclick="rate('vfriedrice',1)">★</span>
     <span class="star" onclick="rate('vfriedrice',2)">★</span>
     <span class="star" onclick="rate('vfriedrice',3)">★</span>
@@ -577,8 +643,9 @@ body.no-scroll {
       <div class="menu-item" data-id="efriedrice">
         <img src="efriedrice.jpg" alt="Egg Fried Rice">
         <h3>Egg Fried Rice</h3>
-        <span>₹ 180 </span>
-<div class="stars">
+        <span>₹ 120 </span>
+        <button onclick="addToCart('Veg Fried Rice',120)">Add to Cart</button>
+  <div class="stars">
     <span class="star" onclick="rate('efriedrice',1)">★</span>
     <span class="star" onclick="rate('efriedrice',2)">★</span>
     <span class="star" onclick="rate('efriedrice',3)">★</span>
@@ -590,7 +657,8 @@ body.no-scroll {
       <div class="menu-item" data-id="cfriedrice">
         <img src="cfriedrice.jpg" alt="Chicken Fried Rice">
         <h3>chicken Fried Rice</h3>
-        <span>₹ 180 </span>
+        <span>₹ 160 </span>
+        <button onclick="addToCart('Chicken Fried Rice',160)">Add to Cart</button>
 <div class="stars">
     <span class="star" onclick="rate('cfriedrice',1)">★</span>
     <span class="star" onclick="rate('cfriedrice',2)">★</span>
@@ -604,6 +672,7 @@ body.no-scroll {
         <img src="momo.jpg" alt="Chicken MOMO">
         <h3>Chicken MOMO</h3>
         <span>₹ 80 </span>
+        <button onclick="addToCart('Chicken MOMO',80)">Add to Cart</button>
 <div class="stars">
     <span class="star" onclick="rate('momo',1)">★</span>
     <span class="star" onclick="rate('momo',2)">★</span>
@@ -777,6 +846,96 @@ document.addEventListener('click', function (e) {
     document.body.classList.remove('no-scroll');
   }
 });
+</script>
+<!-- CART PANEL -->
+<div class="cart-panel" id="cartPanel">
+  <h3>Your Cart</h3>
+  <div id="cartItems"></div>
+  <div class="cart-total">
+    Total: ₹ <span id="cartTotal">0</span>
+  </div>
+  <button onclick="sendOrder()">Order on WhatsApp</button>
+</div>
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function addToCart(name, price) {
+  const existing = cart.find(item => item.name === name);
+
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ name, price, qty: 1 });
+  }
+
+  saveCart();
+  renderCart();
+}
+
+function saveCart() {
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+function renderCart() {
+  const cartItems = document.getElementById("cartItems");
+  const cartCount = document.getElementById("cart-count");
+  const cartTotal = document.getElementById("cartTotal");
+
+  cartItems.innerHTML = "";
+  let total = 0;
+  let count = 0;
+
+  cart.forEach((item, index) => {
+    total += item.price * item.qty;
+    count += item.qty;
+
+    cartItems.innerHTML += `
+      <div class="cart-item">
+        <div>
+          ${item.name} (x${item.qty})
+        </div>
+        <div>
+          ₹${item.price * item.qty}
+          <button onclick="removeItem(${index})">❌</button>
+        </div>
+      </div>
+    `;
+  });
+
+  cartTotal.innerText = total;
+  cartCount.innerText = count;
+}
+
+function removeItem(index) {
+  cart.splice(index, 1);
+  saveCart();
+  renderCart();
+}
+
+function toggleCart() {
+  document.getElementById("cartPanel").classList.toggle("show");
+}
+
+function sendOrder() {
+  if (cart.length === 0) {
+    alert("Cart is empty");
+    return;
+  }
+
+  let message = "Hello, I want to order:%0A";
+  let total = 0;
+
+  cart.forEach(item => {
+    message += `${item.name} x${item.qty} = ₹${item.price * item.qty}%0A`;
+    total += item.price * item.qty;
+  });
+
+  message += `%0ATotal = ₹${total}`;
+
+  window.open(`https://wa.me/918420405045?text=${message}`, "_blank");
+}
+
+renderCart();
 </script>
 
 
