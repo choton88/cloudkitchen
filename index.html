@@ -324,18 +324,21 @@ body.no-scroll {
 @media (max-width: 768px) {
   .menu-dropdown {
     position: fixed;
-    top: 110px;           /* below header */
-    right: 10px;         /* stick to right */
+    top: 80px;            /* slightly closer to header */
+    right: 10px;          /* stick to right side */
     left: auto;
 
-    width: 90vw;
-    max-width: 280px;
+    width: 250px;         /* fixed width instead of 90vw */
     max-height: 65vh;
 
-    transform: translateX(20px) translateY(-10px);
+    transform: translateY(-10px);
     z-index: 9999;
   }
 
+  .menu-dropdown.show {
+    transform: translateY(0);
+  }
+}
   .menu-dropdown.show {
     transform: translateX(0) translateY(0);
   }
@@ -416,6 +419,9 @@ body.no-scroll {
 
     <a href="#" onclick="openAdmin()">Admin Login</a>
   </div>
+<div class="cart-icon" onclick="toggleCart()">
+  🛒 <span id="cart-count">0</span>
+</div>
  <!-- Hamburger (MOBILE ONLY) -->
     <div class="hamburger" onclick="toggleMenuList()">☰</div>
   <!-- MENU LIST DROPDOWN -->
@@ -780,4 +786,3 @@ document.addEventListener('click', function (e) {
 
 </body>
 </html>
-
