@@ -583,19 +583,25 @@ body.no-scroll {
 }
 @media (max-width: 768px) {
 
-  nav > div {
-    width: 100%;
+  header {
     display: flex;
     align-items: center;
+    padding: 10px 15px; /* control side spacing */
+  }
+
+  nav > div {
+    display: flex;
+    align-items: center;
+    width: 100%;
   }
 
   .cart-icon {
-    order: 2;
-    margin-left: auto;   /* push to right */
+    margin-left: auto;  /* pushes to extreme right */
+    order: 3;
   }
 
   .hamburger {
-    order: 1;
+    order: 2;
   }
 
 }
@@ -1254,4 +1260,5 @@ transition:opacity 0.3s ease;
 
 </body>
 </html>
+
 
