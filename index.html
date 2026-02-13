@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sagnik's Cloud Kitchen</title>
+
+  <meta name="description" content="Order fresh and hygienic food online from Sagnik's Cloud Kitchen in Baruipur, Kolkata. Fast delivery available.">
+  <meta name="keywords" content="Cloud Kitchen Baruipur, Order Food Kolkata, Chicken Biryani Baruipur, Online Food Delivery">
+  <meta name="author" content="Sagnik's Cloud Kitchen">
+
   <style>
 /* Bounce Animation */
 @keyframes cartBounce {
@@ -553,9 +558,6 @@ body.no-scroll {
     display: none !important;
   }
 }
-<meta name="description" content="Order fresh and hygienic food online from Sagnik's Cloud Kitchen in Baruipur, Kolkata. Fast delivery available.">
-<meta name="keywords" content="Cloud Kitchen Baruipur, Order Food Kolkata, Chicken Biryani Baruipur, Online Food Delivery">
-<meta name="author" content="Sagnik's Cloud Kitchen">
 
   </style>
 </head>
@@ -1022,6 +1024,13 @@ function addToCart(name, price, button) {
   renderCart();
   showToast(name + " added to cart");
 }
+// 🛒 Bounce animation when item added
+const cartBtn = document.querySelector(".cart-icon");
+cartBtn.classList.add("bounce");
+
+setTimeout(() => {
+  cartBtn.classList.remove("bounce");
+}, 500);
 
 function saveCart() {
   localStorage.setItem("cart", JSON.stringify(cart));
@@ -1130,13 +1139,6 @@ function sendOrder() {
   cart = [];
   saveCart();
   renderCart();
-// 🔥 Bounce cart icon
-const cartBtn = document.querySelector(".cart-icon");
-cartBtn.classList.add("bounce");
-
-setTimeout(() => {
-  cartBtn.classList.remove("bounce");
-}, 500);
 
   document.getElementById("cartPanel").classList.remove("show");
   document.getElementById("cartOverlay").classList.remove("show");
