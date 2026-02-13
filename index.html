@@ -5,6 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sagnik's Cloud Kitchen</title>
   <style>
+/* Bounce Animation */
+@keyframes cartBounce {
+  0%   { transform: translateY(0); }
+  30%  { transform: translateY(-10px); }
+  50%  { transform: translateY(0); }
+  70%  { transform: translateY(-5px); }
+  100% { transform: translateY(0); }
+}
+
+.cart-icon.bounce {
+  animation: cartBounce 0.5s ease;
+}
+
 /* ===== 3D GREEN ADD TO CART BUTTON ===== */
 
 .add3d-btn {
@@ -76,19 +89,48 @@ button:hover {
   cursor: pointer;
   font-size: 14px;
 }
-
 .cart-icon {
+  width: 85px;
+  height: 35px;
+  background: linear-gradient(145deg, #25D366, #128C7E); /* Green gradient */
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 24px;
+  color: white;
   cursor: pointer;
-  font-size: 20px;
   position: relative;
+
+  /* 3D Effect */
+  box-shadow:
+    0 6px 0 #0f6b5a,
+    0 8px 15px rgba(0,0,0,0.3);
+
+  transition: all 0.15s ease;
+}
+
+/* Press Effect */
+.cart-icon:active {
+  transform: translateY(4px);
+  box-shadow:
+    0 2px 0 #0f6b5a,
+    0 4px 10px rgba(0,0,0,0.3);
 }
 
 #cart-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
   background: gold;
   color: black;
   border-radius: 50%;
-  padding: 2px 6px;
+  padding: 4px 7px;
   font-size: 12px;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
 .cart-panel {
@@ -539,14 +581,6 @@ body.no-scroll {
     <span class="menu-btn" onclick="toggleMenuList()">Menu ▾</span>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
-    <a
-      href="https://wa.me/918420405045?text=Hello%20I%20want%20to%20place%20an%20order"
-      target="_blank"
-      style="background:#25D366;padding:8px 14px;border-radius:20px;color:white;"
-    >
-      Order Now
-    </a>
-
     <a href="#" onclick="openAdmin()">Admin Login</a>
   </div>
 <div class="cart-icon" onclick="toggleCart()">
@@ -1096,6 +1130,13 @@ function sendOrder() {
   cart = [];
   saveCart();
   renderCart();
+// 🔥 Bounce cart icon
+const cartBtn = document.querySelector(".cart-icon");
+cartBtn.classList.add("bounce");
+
+setTimeout(() => {
+  cartBtn.classList.remove("bounce");
+}, 500);
 
   document.getElementById("cartPanel").classList.remove("show");
   document.getElementById("cartOverlay").classList.remove("show");
