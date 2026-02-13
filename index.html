@@ -587,29 +587,28 @@ body.no-scroll {
     position: relative;
   }
 
-  nav {
-    width: auto;
-  }
-
-  nav > div {
-    display: flex;
-    align-items: center;
-  }
-
   .cart-icon {
     position: absolute;
-    right: 15px;   /* extreme right */
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .hamburger {
+    position: absolute;
+    right: 110px;
     top: 50%;
     transform: translateY(-50%);
   }
 
 }
-    
+
   </style>
 </head>
 <body>
 
   <header>
+
     <div style="display:flex;align-items:center;gap:15px;">
       <img 
   src="logo.png" 
@@ -618,6 +617,12 @@ body.no-scroll {
 />
       <h1>Sagnik's Cloud Kitchen</h1>
     </div>
+ <!-- Hamburger (MOBILE ONLY) -->
+    <div class="hamburger" onclick="toggleMenuList()">☰</div>
+
+<div class="cart-icon" onclick="toggleCart()">
+  🛒 <span id="cart-count">0</span>
+</div>
     <nav>
      <div style="display:flex;align-items:center;gap:12px;position:relative;">
 
@@ -631,11 +636,6 @@ body.no-scroll {
     <a href="#contact">Contact</a>
     <a href="#" onclick="openAdmin()">Admin Login</a>
   </div>
-<div class="cart-icon" onclick="toggleCart()">
-  🛒 <span id="cart-count">0</span>
-</div>
- <!-- Hamburger (MOBILE ONLY) -->
-    <div class="hamburger" onclick="toggleMenuList()">☰</div>
   <!-- MENU LIST DROPDOWN -->
   <div class="menu-dropdown" id="menuList">
 <!-- MOBILE NAV LINKS -->
@@ -1260,8 +1260,3 @@ transition:opacity 0.3s ease;
 
 </body>
 </html>
-
-
-
-
-
