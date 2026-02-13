@@ -581,7 +581,24 @@ body.no-scroll {
     display: none !important;
   }
 }
+@media (max-width: 768px) {
 
+  nav > div {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .cart-icon {
+    order: 2;
+    margin-left: auto;   /* push to right */
+  }
+
+  .hamburger {
+    order: 1;
+  }
+
+}
   </style>
 </head>
 <body>
@@ -1237,3 +1254,4 @@ transition:opacity 0.3s ease;
 
 </body>
 </html>
+
