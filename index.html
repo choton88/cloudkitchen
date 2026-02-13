@@ -977,7 +977,7 @@ document.addEventListener('click', function (e) {
     menu &&
     !menu.contains(e.target) &&
     !menuBtn?.contains(e.target) &&
-    !hamburger.contains(e.target)
+    !hamburger?.contains(e.target)
   ) {
     menu.classList.remove('show');
     document.body.classList.remove('no-scroll');
@@ -1023,14 +1023,17 @@ function addToCart(name, price, button) {
   saveCart();
   renderCart();
   showToast(name + " added to cart");
-}
+
 // 🛒 Bounce animation when item added
 const cartBtn = document.querySelector(".cart-icon");
-cartBtn.classList.add("bounce");
+if (cartBtn) {
+  cartBtn.classList.add("bounce");
+  setTimeout(() => {
+    cartBtn.classList.remove("bounce");
+  }, 500);
+}
 
-setTimeout(() => {
-  cartBtn.classList.remove("bounce");
-}, 500);
+}  // ✅ CLOSE addToCart FUNCTION HERE
 
 function saveCart() {
   localStorage.setItem("cart", JSON.stringify(cart));
