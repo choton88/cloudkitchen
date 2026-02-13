@@ -583,28 +583,17 @@ body.no-scroll {
 }
 @media (max-width: 768px) {
 
-  header {
-    display: flex;
-    align-items: center;
-    padding: 10px 15px; /* control side spacing */
-  }
-
-  nav > div {
-    display: flex;
-    align-items: center;
-    width: 100%;
-  }
-
   .cart-icon {
-    margin-left: auto;  /* pushes to extreme right */
-    order: 3;
+    position: absolute;
+    right: 15px; /* adjust if needed */
   }
 
-  .hamburger {
-    order: 2;
+  header {
+    position: relative;
   }
 
 }
+
   </style>
 </head>
 <body>
@@ -1260,5 +1249,6 @@ transition:opacity 0.3s ease;
 
 </body>
 </html>
+
 
 
