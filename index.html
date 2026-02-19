@@ -1,15 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+ 
+  <title>Sagnik's Cloud Kitchen | Best Food in Baruipur Kolkata</title>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sagnik's Cloud Kitchen</title>
-
+  <meta property="og:title" content="Sagnik's Cloud Kitchen - Order Online in Baruipur">
+  <meta property="og:description" content="Fresh & hygienic food in Baruipur. Order Chicken Biryani, Chowmein, Fried Rice & more.">
+  <meta property="og:type" content="website">
   <meta name="description" content="Order fresh and hygienic food online from Sagnik's Cloud Kitchen in Baruipur, Kolkata. Fast delivery available.">
   <meta name="keywords" content="Cloud Kitchen Baruipur, Order Food Kolkata, Chicken Biryani Baruipur, Online Food Delivery">
+
   <meta name="author" content="Sagnik's Cloud Kitchen">
 
   <style>
+.cart-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.qty-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.qty-box button {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: #28a745;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+}
+
+.qty-box span {
+  min-width: 20px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.special {
+  position: relative;
+  border: 2px solid #ff9800;
+  box-shadow: 0 0 15px rgba(255, 152, 0, 0.5);
+  transform: scale(1.03);
+  transition: 0.3s ease;
+}
+
+.special:hover {
+  transform: scale(1.05);
+}
+
+.special::before {
+  content: "🔥 Today's Special";
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  background: linear-gradient(45deg, #ff5722, #ff9800);
+  color: white;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
 .menu {
   justify-content: center;
 }
@@ -21,7 +101,7 @@
 
 .desktop-nav a {
   display: inline-block;
-  padding: 6px 10px;
+  padding: 6px 6px;
 }
 
 /* Bounce Animation */
@@ -177,7 +257,8 @@ button:hover {
 .cart-item {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  align-items: center;
+  margin-bottom: 12px;
 }
 
 .cart-total {
@@ -301,7 +382,7 @@ html, body {
 }
 
 .desktop-nav a {
-  margin-left: 5px;
+  margin-left: 0;
   display: inline-block;
 }
      .menu-btn {
@@ -431,6 +512,7 @@ html, body {
   color: gold;
   transform: scale(1.25);
   text-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
+  animation: pop 0.25s ease;
 }
 @keyframes pop {
   0% {
@@ -442,14 +524,6 @@ html, body {
   100% {
     transform: scale(1.25);
   }
-}
-
-.star.active {
-  animation: pop 0.25s ease;
-}
-
-.star.active {
-  color: gold;
 }
 
 .rating-text {
@@ -485,7 +559,8 @@ html, body {
 .desktop-nav {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 6px;
+  margin-left: auto;   /* pushes everything to right */
 }
 
 /* hamburger */
@@ -584,30 +659,30 @@ body.no-scroll {
 @media (max-width: 768px) {
 
   header {
-    position: relative;
-    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  header > div:first-child {
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
 
   header h1 {
-    font-size: 18px;   /* smaller title for mobile */
-  }
-
-  .cart-icon {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
+    font-size: 16px;
   }
 
   .hamburger {
-    position: absolute;
-    right: 110px;
-    top: 50%;
-    transform: translateY(-50%);
+    display: block;
+  }
+
+  .cart-icon {
+    margin-left: 10px;
   }
 
 }
-
 
   </style>
 </head>
@@ -623,14 +698,8 @@ body.no-scroll {
 />
       <h1>Sagnik's Cloud Kitchen</h1>
     </div>
- <!-- Hamburger (MOBILE ONLY) -->
-    <div class="hamburger" onclick="toggleMenuList()">☰</div>
-
-<div class="cart-icon" onclick="toggleCart()">
-  🛒 <span id="cart-count">0</span>
-</div>
     <nav>
-     <div style="display:flex;align-items:center;gap:12px;position:relative;">
+     <div style="display:flex;align-items:center;gap:4px;position:relative;">
 
   <!-- Desktop links -->
   <div class="desktop-nav">
@@ -641,6 +710,12 @@ body.no-scroll {
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
     <a href="#" onclick="openAdmin()">Admin Login</a>
+ <!-- Hamburger (MOBILE ONLY) -->
+    <div class="hamburger" onclick="toggleMenuList()">☰</div>
+
+<div class="cart-icon" onclick="toggleCart()">
+  🛒 <span id="cart-count">0</span>
+</div>
   </div>
   <!-- MENU LIST DROPDOWN -->
   <div class="menu-dropdown" id="menuList">
@@ -683,7 +758,7 @@ body.no-scroll {
   <img src="image/mchowmein.jpg" loading="lazy" alt="Mixed Chowmein">
   <h3>Mixed Chowmein</h3>
   <span>₹ 120 </span>
-  <button class="add3d-btn" onclick="addToCart('Mixed Chowmein',120,this)">
+  <button class="add3d-btn" onclick="handleCartClick(this,'Mixed Chowmein',120)">
   Add To Cart
 </button>
   <div class="stars">
@@ -699,7 +774,7 @@ body.no-scroll {
   <img src="image/cchowmein.jpg" loading="lazy" alt="Chicken Chowmein">
   <h3>Chicken Chowmein</h3>
   <span>₹ 120 </span>
-  <button class="add3d-btn" onclick="addToCart('Chicken Chowmein',120,this)">
+  <button class="add3d-btn" onclick="handleCartClick(this,'Chicken Chowmein',120)">
   Add To Cart
 </button>
   <div class="stars">
@@ -715,7 +790,7 @@ body.no-scroll {
   <img src="image/echowmein.jpg" loading="lazy" alt="Egg Chowmein">
   <h3>Egg Chowmein</h3>
   <span>₹ 120 </span>
-  <button class="add3d-btn" onclick="addToCart('Egg Chowmein',120,this)">
+  <button class="add3d-btn" onclick="handleCartClick(this,'Egg Chowmein',120)">
   Add To Cart
 </button>
   <div class="stars">
@@ -731,7 +806,7 @@ body.no-scroll {
   <img src="image/chicken.jpg" loading="lazy" alt="Chicken Butter Masala">
   <h3>Chicken Butter Masala</h3>
   <span>₹ 120 </span>
-  <button class="add3d-btn" onclick="addToCart('Chicken Butter Masala',120,this)">
+  <button class="add3d-btn" onclick="handleCartClick(this,'Chicken Butter Masala',120)">
   Add To Cart
 </button>
   <div class="stars">
@@ -747,7 +822,7 @@ body.no-scroll {
   <img src="image/chillichicken.jpg" loading="lazy" alt="Chilli Chicken">
   <h3>Chilli Chicken</h3>
   <span>₹ 120 </span>
-  <button class="add3d-btn" onclick="addToCart('Chilli Chicken',120,this)">
+  <button class="add3d-btn" onclick="handleCartClick(this,'Chilli Chicken',120)">
   Add To Cart
 </button>
   <div class="stars">
@@ -763,7 +838,7 @@ body.no-scroll {
   <img src="image/manchurian.jpg" loading="lazy" alt="Chicken Manchurian">
   <h3>Chicken Manchurian</h3>
   <span>₹ 120 </span>
-  <button class="add3d-btn" onclick="addToCart('Chicken Manchurian',120,this)">
+  <button class="add3d-btn" onclick="handleCartClick(this,'Chicken Manchurian',120)">
   Add To Cart
 </button>
   <div class="stars">
@@ -775,11 +850,11 @@ body.no-scroll {
   </div>
   <div class="rating-text" id="manchurian-rating"></div>
 </div>
-      <div class="menu-item" data-id="biryani">
+      <div class="menu-item special" data-id="biryani">
         <img src="image/biryani.jpg" loading="lazy" alt="Chicken Biryani">
         <h3>Chicken Biryani</h3>
         <span>₹ 160 </span>
-  <button class="add3d-btn" onclick="addToCart('Chicken Biryani',160,this)">
+  <button class="add3d-btn" onclick="handleCartClick(this,'Chicken Biryani',160)">
   Add To Cart
 </button>
 <div class="stars">
@@ -795,7 +870,7 @@ body.no-scroll {
         <img src="image/mfriedrice.jpg" loading="lazy" alt="Mixed Fried Rice">
         <h3>Mixed Fried Rice</h3>
         <span>₹ 180 </span>
-        <button class="add3d-btn" onclick="addToCart('Mixed Fried Rice',180,this)">
+       <button class="add3d-btn" onclick="handleCartClick(this,'Mixed Fried Rice',180)">
   Add To Cart
 </button>
     <div class="stars">
@@ -811,7 +886,7 @@ body.no-scroll {
         <img src="image/vfriedrice.jpg" loading="lazy" alt="Veg Fried Rice">
         <h3>Veg Fried Rice</h3>
         <span>₹ 80 </span>
-  <button class="add3d-btn" onclick="addToCart('Veg Fried Rice',80,this)">
+  <button class="add3d-btn" onclick="handleCartClick(this,'Veg Fried Rice',80)">
   Add To Cart
 </button>
   <div class="stars">
@@ -827,7 +902,7 @@ body.no-scroll {
         <img src="image/efriedrice.jpg" loading="lazy" alt="Egg Fried Rice">
         <h3>Egg Fried Rice</h3>
         <span>₹ 120 </span>
-  <button class="add3d-btn" onclick="addToCart('Egg Fried Rice',120,this)">
+  <button class="add3d-btn" onclick="handleCartClick(this,'Egg Fried Rice',120)">
   Add To Cart
 </button>
   <div class="stars">
@@ -843,7 +918,7 @@ body.no-scroll {
         <img src="image/cfriedrice.jpg" loading="lazy" alt="Chicken Fried Rice">
         <h3>Chicken Fried Rice</h3>
         <span>₹ 160 </span>
-  <button class="add3d-btn" onclick="addToCart('Chicken Fried Rice',160,this)">
+  <button class="add3d-btn" onclick="handleCartClick(this,'Chicken Fried Rice',160)">
   Add To Cart
 </button>
 <div class="stars">
@@ -859,7 +934,7 @@ body.no-scroll {
         <img src="image/momo.jpg" loading="lazy" alt="Chicken MOMO">
         <h3>Chicken MOMO</h3>
         <span>₹ 80 </span>
-  <button class="add3d-btn" onclick="addToCart('Chicken MOMO',80,this)">
+  <button class="add3d-btn" onclick="handleCartClick(this,'Chicken MOMO',80)">
   Add To Cart
 </button>
 <div class="stars">
@@ -1054,15 +1129,16 @@ let cart = JSON.parse(localStorage.getItem("cart")) || [];
 function addToCart(name, price, button) {
 
   // Button animation
-  if (button) {
-    button.innerText = "✓ Added";
-    button.style.background = "#2e7d32";
+  if (button && !button.classList.contains("go-to-cart")) {
+  button.innerText = "✓ Added";
+  button.style.background = "#2e7d32";
 
-    setTimeout(() => {
-      button.innerText = "Add To Cart";
-      button.style.background = "";
-    }, 1200);
-  }
+  setTimeout(() => {
+    button.innerText = "Go-to-Cart";
+    button.classList.add("go-to-cart");
+    button.style.background = "";
+  }, 1200);
+}
 
   const existing = cart.find(item => item.name === name);
 
@@ -1105,26 +1181,43 @@ function renderCart() {
     count += item.qty;
 
     cartItems.innerHTML += `
-      <div class="cart-item">
-        <div>
-          ${item.name} (x${item.qty})
-        </div>
-        <div>
-          ₹${item.price * item.qty}
-          <button onclick="removeItem(${index}); event.stopPropagation();">❌</button>
+  <div class="cart-item">
 
-        </div>
+    <div class="cart-left">
+      <div>${item.name}</div>
+
+      <div class="qty-box">
+        <button onclick="decreaseQty(${index})">−</button>
+        <span>${item.qty}</span>
+        <button onclick="increaseQty(${index})">+</button>
       </div>
-    `;
+    </div>
+
+    <div class="cart-right">
+      ₹${item.price * item.qty}
+      <button onclick="removeItem(${index})">❌</button>
+    </div>
+
+  </div>
+`;
+
   });
+// Reset buttons if cart empty
+if (cart.length === 0) {
+  document.querySelectorAll(".go-to-cart").forEach(btn => {
+    btn.innerText = "Add To Cart";
+    btn.classList.remove("go-to-cart");
+  });
+ }
 
   // 🚚 Delivery Logic
   let delivery = 0;
-  if (subtotal > 0 && subtotal < FREE_DELIVERY_MIN) {
+  if (subtotal < FREE_DELIVERY_MIN && subtotal > 0){
     delivery = DELIVERY_CHARGE;
   }
 
   let total = subtotal + delivery;
+
 cartItems.innerHTML += `
   <hr>
   <div class="cart-item">
@@ -1134,7 +1227,7 @@ cartItems.innerHTML += `
   <div class="cart-item">
     <div>Delivery</div>
     <div>${delivery === 0 && subtotal >= FREE_DELIVERY_MIN ? "FREE" : "₹" + delivery}</div>
-  </div>
+
 `;
 
 // ⭐ ADD THIS BLOCK RIGHT HERE
@@ -1155,6 +1248,23 @@ function removeItem(index) {
   saveCart();
   renderCart();
 }
+
+function increaseQty(index) {
+  cart[index].qty++;
+  saveCart();
+  renderCart();
+}
+
+function decreaseQty(index) {
+  if (cart[index].qty > 1) {
+    cart[index].qty--;
+  } else {
+    cart.splice(index, 1);
+  }
+  saveCart();
+  renderCart();
+}
+
 function toggleCart() {
   const panel = document.getElementById("cartPanel");
   const overlay = document.getElementById("cartOverlay");
@@ -1205,13 +1315,15 @@ renderCart();
 document.addEventListener("click", function (event) {
   const cartPanel = document.getElementById("cartPanel");
   const cartBtn = document.querySelector(".cart-icon");
+  const goToCartBtn = document.querySelector(".go-to-cart");
   const overlay = document.getElementById("cartOverlay");
 
   if (
     cartPanel &&
     cartBtn &&
     !cartPanel.contains(event.target) &&
-    !cartBtn.contains(event.target)
+    !cartBtn.contains(event.target)&&
+    !goToCartBtn.contains(event.target)
   ) {
     cartPanel.classList.remove("show");
     overlay.classList.remove("show");
@@ -1244,6 +1356,36 @@ function showToast(message) {
     toast.style.display = "none";
   }, 2000);
 }
+function handleCartClick(button, name, price) {
+
+  // If already changed to Go to Cart
+  if (button.classList.contains("go-to-cart")) {
+    toggleCart();
+    return;
+  }
+
+  // Otherwise add to cart
+  addToCart(name, price, button);
+
+  // Change button text
+  button.innerText = "Go-to-Cart";
+  button.classList.add("go-to-cart");
+}
+function openCart() {
+  const panel = document.getElementById("cartPanel");
+  const overlay = document.getElementById("cartOverlay");
+
+  panel.classList.add("show");
+  overlay.classList.add("show");
+  document.body.classList.add("no-scroll");
+}
+function closeCart() {
+  const panel = document.getElementById("cartPanel");
+  const overlay = document.getElementById("cartOverlay");
+
+  panel.classList.remove("show");
+  overlay.classList.remove("show");
+}
 
 </script>
 <!-- Toast Notification -->
@@ -1266,4 +1408,3 @@ transition:opacity 0.3s ease;
 
 </body>
 </html>
-
