@@ -703,16 +703,17 @@ body.no-scroll {
 
   <!-- Desktop links -->
   <div class="desktop-nav">
-    <a href="#home">Home</a>
+  <a href="#home">Home</a>
+  <span class="menu-btn" onclick="toggleMenuList()">Menu ▾</span>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+  <a href="#" onclick="openAdmin()">Admin Login</a>
+</div>
 
-    <!-- MENU BUTTON -->
-    <span class="menu-btn" onclick="toggleMenuList()">Menu ▾</span>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
-    <a href="#" onclick="openAdmin()">Admin Login</a>
- <!-- Hamburger (MOBILE ONLY) -->
-    <div class="hamburger" onclick="toggleMenuList()">☰</div>
+<!-- MOBILE HAMBURGER -->
+<div class="hamburger" onclick="toggleMenuList()">☰</div>
 
+<!-- CART ICON (VISIBLE ON ALL DEVICES) -->
 <div class="cart-icon" onclick="toggleCart()">
   🛒 <span id="cart-count">0</span>
 </div>
@@ -1408,3 +1409,4 @@ transition:opacity 0.3s ease;
 
 </body>
 </html>
+
