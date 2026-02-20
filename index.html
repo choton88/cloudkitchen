@@ -1132,7 +1132,7 @@ document.addEventListener('click', function (e) {
   <div class="cart-total">
     Total: ₹ <span id="cartTotal">0</span>
   </div>
-  <button onclick="sendOrder()">Order on WhatsApp</button>
+  <button onclick="openCustomerForm()">Order on WhatsApp</button>
 </div>
 <script>
 const DELIVERY_CHARGE = 30;
@@ -1401,6 +1401,59 @@ function closeCart() {
 }
 
 </script>
+ <script>
+function openCustomerForm() {
+  if (cart.length === 0) {
+    alert("Cart is empty");
+    return;
+  }
+  document.getElementById("customerModal").style.display = "flex";
+}
+
+function confirmOrder() {
+  const name = document.getElementById("custName").value.trim();
+  const phone = document.getElementById("custPhone").value.trim();
+  const address = document.getElementById("custAddress").value.trim();
+
+  if (!name || !phone || !address) {
+    document.getElementById("custMsg").innerText = "Please fill all details";
+    return;
+  }
+
+  document.getElementById("customerModal").style.display = "none";
+  sendOrderWithCustomer(name, phone, address);
+}
+
+function sendOrderWithCustomer(name, phone, address) {
+
+  let message = `Hello, I want to order:%0A%0A`;
+  let subtotal = 0;
+
+  cart.forEach(item => {
+    message += `${item.name} x${item.qty} = ₹${item.price * item.qty}%0A`;
+    subtotal += item.price * item.qty;
+  });
+
+  let delivery = subtotal < FREE_DELIVERY_MIN ? DELIVERY_CHARGE : 0;
+  let total = subtotal + delivery;
+
+  message += `%0A--- Customer Details ---`;
+  message += `%0AName: ${name}`;
+  message += `%0APhone: ${phone}`;
+  message += `%0AAddress: ${address}`;
+
+  message += `%0A%0ASubtotal: ₹${subtotal}`;
+  message += `%0ADelivery: ${delivery === 0 ? "FREE" : "₹" + delivery}`;
+  message += `%0ATotal: ₹${total}`;
+
+  window.open(`https://wa.me/918420405045?text=${message}`, "_blank");
+
+  // Clear cart after order
+  cart = [];
+  saveCart();
+  renderCart();
+}
+</script>
 <!-- Toast Notification -->
 <div id="toast" style="
 position:fixed;
@@ -1417,9 +1470,22 @@ font-weight:600;
 box-shadow:0 4px 10px rgba(0,0,0,0.3);
 transition:opacity 0.3s ease;
 "></div>
+<!-- CUSTOMER DETAILS MODAL -->
+<div class="modal" id="customerModal">
+  <div class="modal-content">
+    <h3>Customer Details</h3>
 
+    <input type="text" id="custName" placeholder="Your Name" required />
+    <input type="tel" id="custPhone" placeholder="Phone Number" required />
+    <textarea id="custAddress" placeholder="Delivery Address" rows="3" required></textarea>
+
+    <button onclick="confirmOrder()">Confirm Order</button>
+    <p id="custMsg" style="color:red;margin-top:8px;"></p>
+  </div>
+</div>
 
 </body>
 </html>
+
 
 
