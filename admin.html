@@ -70,62 +70,26 @@
 <header>
   <h2>📦 Admin Dashboard</h2>
   <button class="logout" onclick="logout()">Logout</button>
+
 </header>
-
 <div class="container">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<div style="max-width:400px;margin:40px auto;">
-  <h3 style="text-align:center;">Orders Per Day</h3>
-  <canvas id="orderChart"></canvas>
-</div>
 
-<!-- Menu Manager -->
-<div class="card">
-  <h3>🍽️ Menu Manager</h3>
-
-  <input id="mName" placeholder="Item Name" />
-  <input id="mPrice" placeholder="Price (₹)" />
-  <input id="mImg" placeholder="Image filename (example: paneer.jpg)" />
-
-  <button class="add-btn" onclick="addMenu()">Add Menu Item</button>
-
-  <table style="margin-top:15px;">
-    <thead>
-      <tr>
-        <th>Item</th>
-        <th>Price</th>
-        <th>Image</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody id="menuTable"></tbody>
-  </table>
-</div>
-
-  <!-- Add Order -->
-  <div class="card">
-    <h3>Add New Order / Enquiry</h3>
-    <input id="name" placeholder="Customer Name" />
-    <input id="phone" placeholder="Phone Number" />
-    <input id="details" placeholder="Order / Enquiry Details" />
-    <select id="status">
-      <option>Pending</option>
-      <option>Preparing</option>
-      <option>Delivered</option>
-    </select>
-    <button class="add-btn" onclick="addOrder()">Add</button>
+  <div style="max-width:400px;margin:40px auto;">
+    <h3 style="text-align:center;">Orders Per Day</h3>
+    <canvas id="orderChart"></canvas>
   </div>
 
-  <!-- Orders List -->
   <div class="card">
     <h3>Order & Enquiry List</h3>
     <table>
       <thead>
         <tr>
+          <th>Order ID</th>
           <th>Name</th>
           <th>Phone</th>
           <th>Details</th>
           <th>Status</th>
+          <th>Time</th>
         </tr>
       </thead>
       <tbody id="orderTable"></tbody>
@@ -133,95 +97,60 @@
   </div>
 
 </div>
-
 <script>
-let menu = JSON.parse(localStorage.getItem('menu')) || [];
+/* 🔐 Admin security check */
+if (localStorage.getItem('adminLoggedIn') !== 'yes') {
+  window.location.href = 'index.html';
+}
 
-function renderMenu(){
-  const t = document.getElementById('menuTable');
-  t.innerHTML = '';
-  menu.forEach((m,i) => {
-    t.innerHTML += `
+/* 📦 Load orders */
+const orders = JSON.parse(localStorage.getItem('orders')) || [];
+</script>
+<script>
+/* 📋 Render orders table */
+function renderOrders() {
+  const table = document.getElementById('orderTable');
+  table.innerHTML = '';
+
+  if (orders.length === 0) {
+    table.innerHTML = `<tr><td colspan="6" style="text-align:center;">No orders yet</td></tr>`;
+    return;
+  }
+
+  orders.forEach(o => {
+    const cls =
+      o.status === 'Pending' ? 'status-pending' :
+      o.status === 'Preparing' ? 'status-preparing' :
+      'status-delivered';
+
+    table.innerHTML += `
       <tr>
-        <td>${m.name}</td>
-        <td>₹${m.price}</td>
-        <td>${m.img}</td>
-        <td><button onclick="delMenu(${i})">❌</button></td>
+        <td><b>${o.orderId || '-'}</b></td>
+        <td>${o.name || '-'}</td>
+        <td>${o.phone || '-'}</td>
+        <td>${o.details || '-'}</td>
+        <td class="${cls}">${o.status || '-'}</td>
+        <td>${o.time || '-'}</td>
       </tr>
     `;
   });
-  localStorage.setItem('menu', JSON.stringify(menu));
 }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+/* 🚀 Render orders AFTER page loads */
+document.addEventListener('DOMContentLoaded', () => {
+  renderOrders();
+});
 
-function addMenu(){
-  if(!mName.value || !mPrice.value) return alert('Fill all fields');
-
-  menu.push({
-    id: Date.now(),
-    name: mName.value,
-    price: mPrice.value,
-    img: mImg.value
-  });
-
-  mName.value = mPrice.value = mImg.value = '';
-  renderMenu();
+/* 🚪 Logout */
+function logout() {
+  localStorage.removeItem('adminLoggedIn');
+  window.location.href = 'index.html';
 }
-
-function delMenu(i){
-  if(confirm('Delete this item?')){
-    menu.splice(i,1);
-    renderMenu();
-  }
-}
-
-renderMenu();
-  // security check
-  if(localStorage.getItem('adminLoggedIn') !== 'yes'){
-    window.location.href = 'index.html';
-  }
-  let orders = JSON.parse(localStorage.getItem('orders')) || [];
-  function render(){
-    const table = document.getElementById('orderTable');
-    table.innerHTML = '';
-    orders.forEach(o => {
-      const cls = o.status === 'Pending' ? 'status-pending' : o.status === 'Preparing' ? 'status-preparing' : 'status-delivered';
-      table.innerHTML += `
-        <tr>
-          <td>${o.name}</td>
-          <td>${o.phone}</td>
-          <td>${o.details}</td>
-          <td class="${cls}">${o.status}</td>
-        </tr>`;
-    });
-    localStorage.setItem('orders', JSON.stringify(orders));
-  }
-
-  function addOrder(){
-    const o = {
-      name: name.value,
-      phone: phone.value,
-      details: details.value,
-      status: status.value
-    };
-
-    if(!o.name || !o.phone) return alert('Name & phone required');
-    
-    orders.push(o);
-    render();
-   
-
-    name.value = phone.value = details.value = '';
-  }
-
-  function logout(){
-    localStorage.removeItem('adminLoggedIn');
-    window.location.href = 'index.html';
-  }
-
-  render();
-
-/* DEMO DATA (replace with real order data later) */
-
+</script>
+<script>
+/* 📊 DEMO DATA (replace later with real data) */
 const ordersPerDay = {
   Monday: 12,
   Tuesday: 18,
@@ -254,14 +183,11 @@ new Chart(ctx, {
   options: {
     responsive: true,
     plugins: {
-      legend: {
-        position: 'bottom'
-      }
+      legend: { position: 'bottom' }
     }
   }
 });
 </script>
-
 
 </body>
 </html>
